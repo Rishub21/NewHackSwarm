@@ -5,8 +5,7 @@
     "slug": "newhs",
     "privacy": "public",
     "sdkVersion": "23.0.0",
-    "version": "1.0.0",
-    "orientation": "portrait",
+      "version": "1.0.0",
     "primaryColor": "#cccccc",
     "icon": "./assets/images/icon.png",
     "splash": {
