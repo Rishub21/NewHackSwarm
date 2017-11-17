@@ -12,6 +12,9 @@ import SettingsScreen from '../screens/SettingsScreen';
 
 export default TabNavigator(
     {
+	Settings: {
+	    screen: SettingsScreen,
+	},
 	Keyboard: {
 	    screen: KeyboardScreen,
 	},
@@ -20,7 +23,7 @@ export default TabNavigator(
 	},
 	Code: {
 	    screen: CodeScreen,
-	},
+	}
     },
     {
 	navigationOptions: ({ navigation }) => ({
@@ -46,6 +49,13 @@ export default TabNavigator(
 			    ? `ios-phone-portrait${focused ? '' : '-outline'}`
 			    : 'md-phone-portrait';
 			break;
+		    case 'Settings':
+			iconName =
+			    Platform.OS === 'ios'
+			    ? `ios-bulb${focused ? '' : '-outline'}`
+			    : 'md-settings';
+			break;
+
 		}
 		return (
 		    <Ionicons
