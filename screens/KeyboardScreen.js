@@ -39,9 +39,27 @@ export default class KeyboardScreen extends React.Component {
 			    alwaysBounceVertical={false}
 			    keyboardShouldPersistTaps={'always'}
 		>
+
+      <View style = {styles.boxrow}>
+      <Text>
+          {this.props.screenProps.state.isHtml ? "HTML " : "CSS "}
+      </Text>
+    
 		    <Text>
 			line {lineNumber}
 		    </Text>
+        <Switch
+            style = {{marginLeft: 50 }}
+  			    onValueChange={(value) => {
+  				    this.props.screenProps.events.next({
+  					action: 'swap_html_css',
+  					value: value
+  				    })
+  			    }}
+  			    value={this.props.screenProps.state.isHtml} />
+
+      </View>
+
 		    <TextInput
 			style={styles.textInput}
 			      defaultValue={currentCode}
@@ -95,10 +113,7 @@ export default class KeyboardScreen extends React.Component {
 					title={"kill line"}
 			    />
 			</View>
-		    </View>
-
-		    <View style={styles.boxrow}>
-			<View
+      <View
 			    style={styles.button}>
 			    <RaisedTextButton color = "rgb(51, 153, 255)" titleColor = "white"
 				onPress={() => {
@@ -111,7 +126,7 @@ export default class KeyboardScreen extends React.Component {
 					title={"↑"}
 			    />
 			</View>
-			<View
+      <View
 			    style={styles.button}>
           <RaisedTextButton color = "rgb(51, 153, 255)" titleColor = "white"
 				onPress={() => {
@@ -125,19 +140,11 @@ export default class KeyboardScreen extends React.Component {
 			    />
 			</View>
 		    </View>
+
+
+
 		    <View style={styles.boxrow}>
-			<Switch
-			    onValueChange={(value) => {
-				    this.props.screenProps.events.next({
-					action: 'swap_html_css',
-					value: value
-				    })
-			    }}
-			    style={{marginTop: 50}}
-			    value={this.props.screenProps.state.isHtml} />
-			<Text>
-			    {this.props.screenProps.state.isHtml ? "HTML" : "CSS"}
-			</Text>
+
 		    </View>
 
 		</ScrollView>
@@ -157,7 +164,8 @@ const styles = StyleSheet.create({
     boxrow: {
 	flexDirection: "row",
 	alignItems: 'flex-end',
-  justifyContent: "center"
+  justifyContent: "center",
+  flex : 1
     },
     textInput: {
 	fontSize: 50,
