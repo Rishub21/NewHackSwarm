@@ -49,7 +49,7 @@ export class Github extends React.Component {
 
     render(){
 	return(
-	    <View>
+	    <View style = {{paddingLeft : 15, paddingRight : 15}}>
 		<Text>
 		    Repo Name
 		</Text>
@@ -59,7 +59,8 @@ export class Github extends React.Component {
 		    onChangeText={(text) =>
 			this.saveData(text)}
 		/>
-    <RaisedTextButton color = "rgb(51, 153, 255)" titleColor = "white"
+
+    <RaisedTextButton style = {{marginTop : 15}} color = "rgb(51, 153, 255)" titleColor = "white"
 
 		    onPress = {() =>
 			{
@@ -77,6 +78,9 @@ export class Github extends React.Component {
 		    }
 		    title={'Create Github Repo'}
 		/>
+    <Text style ={{marginTop : 15}} >
+
+    </Text>
     <RaisedTextButton color = "rgb(51, 153, 255)" titleColor = "white"
 
 		    onPress = {() =>
