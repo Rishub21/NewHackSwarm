@@ -29,7 +29,6 @@ export default class KeyboardScreen extends React.Component {
 	    lineNumber = this.props.screenProps.state.css.currentLine;
 	}
 	var currentCode = code[lineNumber - 1];
-
 	return (
 	    <View style={styles.container}>
 		<ScrollView style={styles.container}
@@ -128,12 +127,15 @@ export default class KeyboardScreen extends React.Component {
 			<Switch
 			    onValueChange={(value) => {
 				    this.props.screenProps.events.next({
-					action: value ? 'swap_to_html' : 'swap_to_css',
-					value: null
+					action: 'swap_html_css',
+					value: value
 				    })
 			    }}
 			    style={{marginBottom: 10}}
 			    value={this.props.screenProps.state.isHtml} />
+			<Text>
+			    {this.props.screenProps.state.isHtml ? "HTML" : "CSS"}
+			</Text>
 		    </View>
 		    
 		</ScrollView>

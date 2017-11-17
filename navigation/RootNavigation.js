@@ -29,7 +29,11 @@ export default class RootNavigator extends React.Component {
 	super(props);
 	this.state = {
 	    html: {
-		code: [],
+		code: [
+		    "<h1>",
+		    "hello world",
+		    "</h1>"
+		],
 		currentLine: 1
 	    },
 	    css: {
@@ -53,22 +57,48 @@ export default class RootNavigator extends React.Component {
 	events.subscribe((event) => {
 	    var newNumber;
 	    var code;
-	    var temp;
+	    var state;
+
 	    switch(event.action){
 		case "key_arrow_up":
 		    if(this.state.isHtml){
 			newNumber = this.state.html.currentLine == 1 ? 1 : this.state.html.currentLine - 1;
+			this.setState({
+			    html: {
+				code: this.state.html.code,
+				currentLine: newNumber
+			    }
+			});
 		    }
 		    if(!this.state.isHtml){
 			newNumber = this.state.css.currentLine == 1 ? 1 : this.state.css.currentLine - 1;
+			this.setState({
+			    css: {
+				code: this.state.css.code,
+				currentLine: newNumber
+			    }
+			});
+
 		    }
 		    break;
 		case "key_arrow_down":
 		    if(this.state.isHtml){
-			newNumber = this.state.html.currentLine == this.state.code.length + 1 ? this.state.code.length + 1 : this.state.currentLine + 1;
+			newNumber = this.state.html.currentLine == this.state.html.code.length + 1 ? this.state.html.code.length + 1 : this.state.html.currentLine + 1;
+			this.setState({
+			    html: {
+				code: this.state.html.code,
+				currentLine: newNumber
+			    }
+			});
 		    }
 		    if(!this.state.isHtml){
-			newNumber = this.state.css.currentLine == this.state.code.length + 1 ? this.state.code.length + 1 : this.state.currentLine + 1;
+			newNumber = this.state.css.currentLine == this.state.css.code.length + 1 ? this.state.css.code.length + 1 : this.state.css.currentLine + 1;
+			this.setState({
+			    css: {
+				code: this.state.css.code,
+				currentLine: newNumber
+			    }
+			});
 		    }
 		    break;
 		case "change_line":
@@ -110,35 +140,33 @@ export default class RootNavigator extends React.Component {
 		    }
 		    break;
 		case "kill_line":
-		    code = this.state.code;
-		    code.splice(this.state.currentLine - 1, 1);
-		    this.setState({
-			code: code,
-			currentCode: code[this.state.currentLine - 1]
-		    });
-		    break;
-		case "swap_to_html":
-		    if(!this.state.isHtml){
-			this.setState({
-			    isHtml: true
-			});
-		    }
-		    break;
-		case "swap_to_css":
 		    if(this.state.isHtml){
+			code = this.state.html.code;
+			code.splice(this.state.html.currentLine, 1);
 			this.setState({
-			    isHtml: false
+			    html: {
+				code: code,
+				currentLine: this.state.html.currentLine + 1
+			    }
+			});
+		    }else{
+			code = this.state.css.code;
+			alert(typeof code);
+			code.splice(this.state.css.currentLine, 1);
+			this.setState({
+			    css: {
+				code: code,
+				currentLine: this.state.css.currentLine + 1
+			    }
 			});
 		    }
 		    break;
+		case "swap_html_css":
+		    state = this.state;
+		    state.isHtml = event.value;
+		    this.setState(state);
+		    break;
 	    }
-	    if(event.action == "key_arrow_up" || event.action == "key_arrow_down"){
-		var newCode = this.state.code[newNumber - 1];
-		this.setState({currentLine: newNumber,
-			       currentCode: newCode
-		});
-	    }
-
 	});
 	return <RootStackNavigator screenProps={{events: events,
 						 state: this.state
