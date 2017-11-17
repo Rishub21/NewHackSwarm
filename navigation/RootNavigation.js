@@ -9,6 +9,17 @@ import * as Rx from "rxjs/Rx";
 
 import {Subject} from "rxjs/Subject";
 
+import * as firebase from 'firebase';
+
+// Initialize Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyDAerQvFQ9pFCXN3cRlJfJwq1tacORKFFk",
+    authDomain: "hackswarm.firebaseapp.com",
+    databaseURL: "https://hackswarm.firebaseio.com"
+};
+
+firebase.initializeApp(firebaseConfig);
+
 const RootStackNavigator = StackNavigator(
   {
     Main: {
@@ -37,14 +48,24 @@ export default class RootNavigator extends React.Component {
 		currentLine: 1
 	    },
 	    css: {
-		code: [],
+		code: [
+		    "\"h1\":",
+		    "{\"color\": \"red\";",
+		    "}"
+		],
 		currentLine: 1
 	    },
 	    isHtml: true
 	};
     }
     
-  componentDidMount() {
+    componentDidMount() {
+	firebase.database().ref('/').on('value', (snapshot) => {
+	    if(snapshot.val()){
+		this.setState(snapshot.val());
+	    }
+	});
+
     this._notificationSubscription = this._registerForPushNotifications();
   }
 
@@ -53,13 +74,26 @@ export default class RootNavigator extends React.Component {
   }
 
     render() {
+	// set
+	firebase.database().ref('/').set({
+	    html: this.state.html,
+	    css: this.state.css
+	});
+
 	var events = new Subject();
 	events.subscribe((event) => {
 	    var newNumber;
 	    var code;
 	    var state;
-
+	    
 	    switch(event.action){
+		case "is_keyboard":
+
+		    break;
+
+		case "is_not_keyboard":
+
+		    break;
 		case "key_arrow_up":
 		    if(this.state.isHtml){
 			newNumber = this.state.html.currentLine == 1 ? 1 : this.state.html.currentLine - 1;
@@ -151,7 +185,6 @@ export default class RootNavigator extends React.Component {
 			});
 		    }else{
 			code = this.state.css.code;
-			alert(typeof code);
 			code.splice(this.state.css.currentLine, 1);
 			this.setState({
 			    css: {

@@ -12,11 +12,11 @@ import SettingsScreen from '../screens/SettingsScreen';
 
 export default TabNavigator(
     {
-	Settings: {
-	    screen: SettingsScreen,
-	},
 	Keyboard: {
 	    screen: KeyboardScreen,
+	},
+	Connect: {
+	    screen: SettingsScreen,
 	},
 	Output: {
 	    screen: OutputScreen,
@@ -27,6 +27,16 @@ export default TabNavigator(
     },
     {
 	navigationOptions: ({ navigation }) => ({
+	    tabBarOnPress: (tab, jumpToIndex) => {
+		if(tab.route.key == "Keyboard"){
+//		    alert(JSON.stringify(this.props));
+		}else{
+//		    alert('no key');
+		}
+		if(!tab.focused){
+		    jumpToIndex(tab.index);
+		}
+	    },
 	    tabBarIcon: ({ focused }) => {
 		const { routeName } = navigation.state;
 		let iconName;
@@ -49,7 +59,7 @@ export default TabNavigator(
 			    ? `ios-phone-portrait${focused ? '' : '-outline'}`
 			    : 'md-phone-portrait';
 			break;
-		    case 'Settings':
+		    case 'Connect':
 			iconName =
 			    Platform.OS === 'ios'
 			    ? `ios-bulb${focused ? '' : '-outline'}`
@@ -69,7 +79,7 @@ export default TabNavigator(
 	}),
 	tabBarComponent: TabBarBottom,
 	tabBarPosition: 'top',
-	animationEnabled: false,
+	animationEnabled: true,
 	swipeEnabled: false,
     }
 );
