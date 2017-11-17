@@ -1,6 +1,4 @@
 import React from 'react';
-import { TextButton, RaisedTextButton } from 'react-native-material-buttons';
-
 import {
     TextInput,
     Button,
@@ -52,7 +50,7 @@ export default class KeyboardScreen extends React.Component {
 					action: 'change_line',
 					value: text
 				    });
-
+				
 			}}
 			      onSubmitEditing={() => {
 				      this.props.screenProps.events.next(
@@ -60,9 +58,9 @@ export default class KeyboardScreen extends React.Component {
 					      action: 'insert_line',
 					      value: null
 					  });
-
+				      
 			      }}
-
+			
 			      autoCapitalize={'none'}
 			      autoFocus={false}
 			      blurOnSubmit={false}
@@ -71,7 +69,7 @@ export default class KeyboardScreen extends React.Component {
 		    <View style={styles.boxrow}>
 			<View
 			    style={styles.button}>
-          <RaisedTextButton color = "rgb(51, 153, 255)" titleColor = "white"
+			    <Button
 				onPress={() => {
 					this.props.screenProps.events.next(
 					    {
@@ -83,8 +81,8 @@ export default class KeyboardScreen extends React.Component {
 			    />
 			</View>
 			<View
-			    style={styles.button}>
-          <RaisedTextButton color = "rgb(51, 153, 255)" titleColor = "white"
+			    style={styles.button}>			
+			    <Button
 				onPress={() => {
 					this.props.screenProps.events.next(
 					    {
@@ -100,7 +98,7 @@ export default class KeyboardScreen extends React.Component {
 		    <View style={styles.boxrow}>
 			<View
 			    style={styles.button}>
-			    <RaisedTextButton color = "rgb(51, 153, 255)" titleColor = "white"
+			    <Button
 				onPress={() => {
 					this.props.screenProps.events.next(
 					    {
@@ -112,8 +110,8 @@ export default class KeyboardScreen extends React.Component {
 			    />
 			</View>
 			<View
-			    style={styles.button}>
-          <RaisedTextButton color = "rgb(51, 153, 255)" titleColor = "white"
+			    style={styles.button}>			
+			    <Button
 				onPress={() => {
 					this.props.screenProps.events.next(
 					    {
@@ -133,13 +131,13 @@ export default class KeyboardScreen extends React.Component {
 					value: value
 				    })
 			    }}
-			    style={{marginTop: 50}}
+			    style={{marginBottom: 10}}
 			    value={this.props.screenProps.state.isHtml} />
 			<Text>
 			    {this.props.screenProps.state.isHtml ? "HTML" : "CSS"}
 			</Text>
 		    </View>
-
+		    
 		</ScrollView>
 	    </View>
 	);
@@ -149,15 +147,14 @@ export default class KeyboardScreen extends React.Component {
 const styles = StyleSheet.create({
     lineNumber: {
 	flex: 1,
-	//color: 'red'
+	color: 'red'
     },
     currentLine: {
 	backgroundColor: "blue"
     },
     boxrow: {
 	flexDirection: "row",
-	alignItems: 'flex-end',
-  justifyContent: "center"
+	alignItems: 'flex-end'
     },
     textInput: {
 	fontSize: 50,
@@ -168,8 +165,8 @@ const styles = StyleSheet.create({
     },
     button: {
 	flex: 1,
-	//borderColor: 'red',
-	borderWidth: 0,
+	borderColor: 'red',
+	borderWidth: 1,
 	padding: 10
     },
     container: {

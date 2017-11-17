@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { AppRegistry, Text, TextInput, View, Button, Alert, ScrollView, AsyncStorage, StyleSheet, Dimensions} from 'react-native';
+import { TextButton, RaisedTextButton } from 'react-native-material-buttons';
 
 var axios = require('axios');
 var base64 = require('base-64');
@@ -58,7 +59,8 @@ export class Github extends React.Component {
 		    onChangeText={(text) =>
 			this.saveData(text)}
 		/>
-		<Button
+    <RaisedTextButton color = "rgb(51, 153, 255)" titleColor = "white"
+
 		    onPress = {() =>
 			{
 			    if(this.state.repoProcessing){
@@ -75,7 +77,8 @@ export class Github extends React.Component {
 		    }
 		    title={'Create Github Repo'}
 		/>
-		<Button
+    <RaisedTextButton color = "rgb(51, 153, 255)" titleColor = "white"
+
 		    onPress = {() =>
 			{
 			    if(this.state.processingFiles){
@@ -176,7 +179,7 @@ export class Github extends React.Component {
 
 		// index.html
 		data.content = base64.encode(
-		    "<html>\n<body>\n" + 
+		    "<html>\n<body>\n" +
 		    this.props.html.code.join('\n')
 		    + "\n</body>\n</html>\n\n"
 		);
@@ -190,7 +193,7 @@ export class Github extends React.Component {
 			})
 			.catch((error) => {
 			    alert(JSON.stringify(error));
-			});   
+			});
 		}else{
 		    alert('trying to update');
 		    // index.html already exists
@@ -210,7 +213,7 @@ export class Github extends React.Component {
 		/*
 
 		data.content = base64.encode(
-		    "{" + 
+		    "{" +
 		    this.props.css.code.join('\n')
 		    + "}"
 		);
@@ -223,7 +226,7 @@ export class Github extends React.Component {
 			})
 			.catch((error) => {
 
-			});		    
+			});
 		}else{
 		    // index.html already exists
 		    // so update it instead
