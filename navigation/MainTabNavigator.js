@@ -49,6 +49,13 @@ export default TabNavigator(
 			    ? `ios-phone-portrait${focused ? '' : '-outline'}`
 			    : 'md-phone-portrait';
 			break;
+		    case 'Settings':
+			iconName =
+			    Platform.OS === 'ios'
+			    ? `ios-bulb${focused ? '' : '-outline'}`
+			    : 'md-settings';
+			break;
+
 		}
 		return (
 		    <Ionicons

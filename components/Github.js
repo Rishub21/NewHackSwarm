@@ -27,7 +27,6 @@ export class Github extends React.Component {
 	    NewBoard: '',
 	    FinalBoard : 'not ready',
 	    data: {
-		name: 'facetestbook26',	    
 		description: 'This is your repository',
 		homepage: 'https://github.com',
 		private: false,
@@ -87,11 +86,6 @@ export class Github extends React.Component {
 				});
 				var data = this.state.fileData;
 				data.githubRepoName = this.state.myKey;
-				data.content = base64.encode(
-				    "<html>\n<body>\n" + 
-				    this.props.html.code.join('\n')
-				    + "\n</body>\n</html>"
-				);
 				this.pushFiles("Rishub21", "vishnu21", data)
 			    }
 
@@ -103,37 +97,6 @@ export class Github extends React.Component {
 	    </View>
 	)
     }
-
-
-    getRepos(username) {
-
-	let url = BASEURL + '/user';
-	let configs = {
-	    'Access-Control-Allow-Origin': '*',
-	};
-	axios
-	    .get(url, configs)
-	    .then(res => {
-
-		alert(1);
-	    })
-	    .catch((error) => {
-		if (error.response) {
-		    this.setState({error:error.response.data});
-		    console.log(error.response.data);
-		    console.log(error.response.status);
-		    console.log(error.response.headers);
-		} else if (error.request) {
-		    this.setState({error:error.request});
-		    console.log(error.request);
-		} else {
-		    this.setState({error:error.message});
-		    console.log('Error', error.message);
-		}
-		console.log(error.config);
-	    });
-    };
-
 
     createRepo(username, password, data) {
 	let url = BASEURL + '/user/repos';
@@ -194,14 +157,13 @@ export class Github extends React.Component {
 		    files[file.name] = file;
 		});
 
-		let url =
+		let baseurl =
 		    BASEURL +
 		    '/repos/' +
 		    username +
 		    '/' +
 		    data.githubRepoName +
-		    '/contents/' +
-		    data.githubFileName;
+		    '/contents/'
 		const token = `${username}:${password}`;
 		const hash = base64.encode(token);
 		const basicAuth = 'Basic ' + hash;
@@ -212,30 +174,73 @@ export class Github extends React.Component {
 		    },
 		};
 
+		// index.html
+		data.content = base64.encode(
+		    "<html>\n<body>\n" + 
+		    this.props.html.code.join('\n')
+		    + "\n</body>\n</html>\n\n"
+		);
+
 		if(filenames.indexOf('index.html') == -1){
 		    // index.html not in repo
 		    axios
-			.put(url, data, configs)
+			.put(url + 'index.html', data, configs)
 			.then(res => {
 			    Alert.alert('created index.html');
 			})
 			.catch((error) => {
-			});		    
+			    alert(JSON.stringify(error));
+			});   
 		}else{
+		    alert('trying to update');
 		    // index.html already exists
 		    // so update it instead
 		    var sha = files['index.html'].sha;
 		    data.sha = sha;
 		    axios
-			.put(url, data, configs)
+			.put(url + 'index.html', data, configs)
 			.then(res => {
 			    Alert.alert('updated index.html');
 			})
 			.catch((error) => {
 			    alert(JSON.stringify(error));
 			});
+		}
+
+		/*
+
+		data.content = base64.encode(
+		    "{" + 
+		    this.props.css.code.join('\n')
+		    + "}"
+		);
+		// style.reactcss
+		if(filenames.indexOf('style.reactcss') == -1){
+		    axios
+			.put(url + 'style.reactcss', data, configs)
+			.then(res => {
+			    Alert.alert('created style.reactcss');
+			})
+			.catch((error) => {
+
+			});		    
+		}else{
+		    // index.html already exists
+		    // so update it instead
+		    var sha = files['style.reactcss'].sha;
+		    data.sha = sha;
+		    axios
+			.put(url + 'style.reactcss', data, configs)
+			.then(res => {
+			    Alert.alert('updated style.reactcss');
+			})
+			.catch((error) => {
+			    alert(JSON.stringify(error));
+			});
 
 		}
+
+		*/
 	    })
     }
 

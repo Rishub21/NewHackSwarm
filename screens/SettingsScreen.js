@@ -34,6 +34,7 @@ export default class HomeScreen extends React.Component {
 		<ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 		    <Github
 			html={this.props.screenProps.state.html}
+			css={this.props.screenProps.state.css}
 		    />
 		</ScrollView>
 	    </View>
