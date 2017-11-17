@@ -79,7 +79,7 @@ export default TabNavigator(
 	}),
 	tabBarComponent: TabBarBottom,
 	tabBarPosition: 'top',
-	animationEnabled: true,
-	swipeEnabled: false,
+	animationEnabled: false,
+	swipeEnabled: true,
     }
 );

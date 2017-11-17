@@ -49,9 +49,8 @@ export default class RootNavigator extends React.Component {
 	    },
 	    css: {
 		code: [
-		    "\"h1\":",
-		    "{\"color\": \"red\";",
-		    "}"
+		    '"h1":',
+		    '{"color": "black"}'
 		],
 		currentLine: 1
 	    },

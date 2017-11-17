@@ -26,13 +26,16 @@ export default class OutputScreen extends React.Component {
 
     render() {
 	var compactedHtml = this.props.screenProps.state.html.code.join("");
+	
 	var compactedCss = "{" + this.props.screenProps.state.css.code.join("") + "}";
 	var style;
+	
 	try{
 	    style = JSON.parse(compactedCss);
 	} catch(error){
-	    
+	    //alert(JSON.stringify(error));
 	}
+	
 	return (
 	    <View style={styles.container}>
 		<ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
